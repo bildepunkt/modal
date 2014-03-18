@@ -1,3 +1,7 @@
+/**
+ * Modal CSS
+ */
+
 @media(min-width: 801px) {
     .modal {
         width: 640px;
@@ -7,7 +11,6 @@
         height: 480px;
     }
 }
-
 @media(max-width: 800px) {
     .modal {
         width: 400px;
@@ -25,7 +28,7 @@
     top: 0;
     width: 100%;
 }
-.overlay {
+.modal-overlay {
     background-color: black;
     cursor: pointer;
     height: 100%;
@@ -43,4 +46,16 @@
 }
 .modal-content {
     overflow: auto;
+}
+.modal-close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 8px;
+    font-size: 14px;
+    line-height: 10px;
+    cursor: pointer;
+}
+.modal-close:hover {
+    font-size: 18px;
 }
