@@ -3,7 +3,8 @@ var modal = (function(){
     /** Private */
     var $win = $(window),
         $doc = $(document),
-        $overlay;
+        $overlay,
+        $close;
 
     /** Public */
     return {
@@ -13,7 +14,8 @@ var modal = (function(){
             var self = this;
 
             this.$el = params.$el;
-            $overlay = this.$el.find('.overlay');
+            $overlay = this.$el.find('.modal-overlay');
+            $close = this.$el.find('.modal-close');
 
             $doc.on('scroll', function() {
                 self.$el.css({
@@ -21,7 +23,11 @@ var modal = (function(){
                 });
             });
 
-            $overlay.on('click', function() {
+            $overlay.on('click', function(e) {
+                self.$el.fadeOut();
+            });
+
+            $close.on('click', function(e) {
                 self.$el.fadeOut();
             });
         }
