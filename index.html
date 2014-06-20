@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="modal.css">
+    <title>modal</title>
+</head>
+<body>
+
 <div class="modal-container">
     <div class="modal-overlay"></div>
     <div class="modal">
@@ -16,10 +24,13 @@
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="modal.js"></script>
 <script>
     $(document).ready(function() {
-        modal.init({
-            $el : '.modal-container'
-        }); 
+        $('.modal-container').modal();
     });
 </script>
+
+</body>
+</html>

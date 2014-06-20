@@ -1,35 +1,54 @@
-var modal = (function(){
+(function($) {
 
-    /** Private */
-    var $win = $(window),
-        $doc = $(document),
-        $overlay,
-        $close;
+$.fn.modal = function(options) {
+    var self = this;
+    var $self = $(self);
+    var $overlay;
+    var $close;
+    var $doc = $(document);
 
-    /** Public */
-    return {
-        $el : null,
+    self.init = function(options) {
+        $overlay = $self.find('.modal-overlay');
+        $close = $self.find('.modal-close');
 
-        init : function(params) {
-            var self = this;
-
-            this.$el = params.$el;
-            $overlay = this.$el.find('.modal-overlay');
-            $close = this.$el.find('.modal-close');
-
-            $doc.on('scroll', function() {
-                self.$el.css({
-                    top : $doc.scrollTop()
-                });
+        $doc.bind('scroll.modal', function() {
+            $self.css({
+                top : $doc.scrollTop()
             });
+        });
 
-            $overlay.on('click', function(e) {
-                self.$el.fadeOut();
-            });
+        $overlay.bind('click.modal', function(e) {
+            self.hide();
+        });
 
-            $close.on('click', function(e) {
-                self.$el.fadeOut();
-            });
-        }
+        $close.bind('click.modal', function(e) {
+            self.hide();
+        });
     };
-}());
+
+    self.hide = function() {
+        $self.fadeOut();
+
+        return self;
+    };
+
+    self.show = function() {
+        $self.fadeIn();
+
+        return self;
+    };
+
+    self.destroy = function() {
+        $doc.unbind('scroll.modal');
+        $overlay.unbind('click.modal');
+        $close.unbind('click.modal');
+
+        return self;
+    };
+
+    self.init(options);
+
+    return self;
+};
+
+}(jQuery));
