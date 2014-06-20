@@ -28,6 +28,7 @@
     position: absolute;
     top: 0;
     width: 100%;
+    z-index: 1024;
 }
 .modal-overlay {
     background-color: black;
@@ -39,9 +40,9 @@
     width: 100%;
 }
 .modal {
-    background-color: #DFD6B2;
-    border: 3px solid #47301A;
-    margin: 32px auto;
+    background-color: #eee;
+    border: 1px solid gray;
+    margin: 12% auto;
     position: relative;
     padding: 24px;
 }
