@@ -50,7 +50,7 @@ $.fn.modal = function(options) {
                         response = null;
                     break;
                     case 'modalPromptSubmit':
-                        inputs = $content.find('input[type="text"]');
+                        inputs = $content.find('input[type="text"], textarea');
                         for (var i = 0; i < inputs.length; i += 1) {
                             $input = $(inputs[i]);
                             response[$input.attr('name')] = $input.val();
@@ -58,7 +58,7 @@ $.fn.modal = function(options) {
                     break;
                 }
 
-                // hide must come before callback if user showing again
+                // hide must come before callback in case callback shows modal again
                 self.hide();
                 self.callback(response);
                 self.callback = null;

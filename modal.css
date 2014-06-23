@@ -22,7 +22,7 @@
 }
 
 .modal-container {
-    /*display: none;*/
+    display: none;
     height: 100%;
     left: 0;
     position: absolute;
@@ -42,7 +42,7 @@
 .modal {
     background-color: #eee;
     border: 1px solid gray;
-    margin: 12% auto;
+    margin: 8% auto 0;
     position: relative;
     padding: 24px;
 }
