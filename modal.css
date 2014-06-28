@@ -42,7 +42,8 @@
 .modal {
     background-color: #eee;
     border: 1px solid gray;
-    box-shadow: 0 4px 24px 4px #222;
+    border-radius: 8px;
+    box-shadow: 0 0 24px 4px #444;
     margin: 8% auto 0;
     padding: 24px;
     position: relative;
