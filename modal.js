@@ -71,11 +71,19 @@ $.fn.modal = function(options) {
     };
 
     self.show = function(markup) {
+        var $input;
+
         if (markup) {
             $content.html(markup);
         }
 
-        $self.stop().fadeIn(256);
+        $input = $self.find('input:text').first();
+
+        $self.stop().fadeIn(256, function() {
+            if ($input.length) {
+                $input.focus();
+            }
+        });
     };
 
     self.prompt = function(markup, callback) {
