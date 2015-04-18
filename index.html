@@ -6,6 +6,8 @@
 </head>
 <body>
 
+<button>Launch</button>
+
 <div class="modal-container">
     <div class="modal-overlay"></div>
     <div class="modal">
@@ -28,7 +30,11 @@
 <script src="modal.js"></script>
 <script>
     $(document).ready(function() {
-        $('.modal-container').modal();
+        var modal = new Modal();
+
+        $('button').on('click', function() {
+            modal.launch(Date.now());
+        });
     });
 </script>
 

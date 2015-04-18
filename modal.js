@@ -1,111 +1,44 @@
-(function($) {
+//var $ = require('jquery');
 
-$.fn.modal = function(options) {
-    var defaults = {
-        prompt: true
-    };
-    var self = this;
-    var $self = $(self);
-    var $overlay;
-    var $close;
-    var $content;
-    var $doc = $(document);
-    // for prompt functionality
-    var callback;
-
-    self.init = function(options) {
-        options = $.extend(defaults, options);
-
-        $overlay = $self.find('.modal-overlay');
-        $close = $self.find('.modal-close');
-        $content = $self.find('.modal-content');
-
-        $doc.bind('scroll.modal', function() {
-            $self.css({
-                top : $doc.scrollTop()
-            });
-        });
-
-        $overlay.bind('click.modal', function(e) {
-            self.hide();
-        });
-
-        $close.bind('click.modal', function(e) {
-            self.hide();
-        });
-
-        // prompt defaults to true
-        if (options.prompt) {
-            $content.on('click.modal', 'button', function(e) {
-                var inputs;
-                var $input;
-                var response = {};
-
-                if (typeof(self.callback) !== 'function') {
-                    return false;
-                }
-
-                switch($(this).attr('id')) {
-                    case 'modalPromptCancel':
-                        response = null;
-                    break;
-                    case 'modalPromptSubmit':
-                        inputs = $content.find('input[type="text"], textarea');
-                        for (var i = 0; i < inputs.length; i += 1) {
-                            $input = $(inputs[i]);
-                            response[$input.attr('name')] = $input.val();
-                        }
-                    break;
-                }
-
-                // hide must come before callback in case callback shows modal again
-                self.hide();
-                self.callback(response);
-                self.callback = null;
-            });
-        }
+var Modal = function() {
+    this.options = {
+        heightPercent: 80
     };
 
-    self.hide = function() {
-        $self.stop().fadeOut(256);
-    };
+    this.$container = $('.modal-container');
+    this.$overlay = $('.modal-overlay');
+    this.$modal = $('.modal');
+    this.$close = $('.modal-close');
+    this.$content = $('.modal-content');
 
-    self.show = function(markup) {
-        var $input;
-
-        if (markup) {
-            $content.html(markup);
-        }
-
-        $input = $self.find('input:text').first();
-
-        $self.stop().fadeIn(256, function() {
-            if ($input.length) {
-                $input.focus();
-            }
-        });
-    };
-
-    self.prompt = function(markup, callback) {
-        markup = markup ? markup : '';
-        markup +=
-            '<button id=modalPromptCancel>cancel</button>' +
-            '<button id=modalPromptSubmit>submit</button>';
-
-        self.show(markup);
-
-        self.callback = callback ? callback : null;
-    };
-
-    self.destroy = function() {
-        $doc.unbind('scroll.modal');
-        $overlay.unbind('click.modal');
-        $close.unbind('click.modal');
-    };
-
-    self.init(options);
-
-    return self;
+    this.$close.bind('click.modal', $.proxy(this.hide, this));
+    this.$overlay.bind('click.modal', $.proxy(this.hide, this));
 };
 
-}(jQuery));
+Modal.prototype.launch = function(content) {
+    this.$content.html(content);
+    this.show();
+};
+
+Modal.prototype.show = function() {
+    var self = this;
+    var winHeight = window.innerHeight;
+    var height = winHeight / 100 * this.options.heightPercent;
+
+    this.$modal.css({
+        height: height + 'px',
+        marginTop: (winHeight - height) / 3 + 'px'
+    });
+
+    this.$container.stop().fadeIn(function() {
+        self.$content.animate({
+            scrollTop: 0
+        });
+    });
+};
+
+Modal.prototype.hide = function() {
+    this.$container.stop().fadeOut();
+};
+
+//module.exports = Modal;
